@@ -1,24 +1,19 @@
-import { getPosts } from '@/services/postService';
+import PostCard from '@/components/post/PostCard';
+import { QueryKey } from '@/lib/constants';
+import PostService from '@/services/postService';
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
 
 export default function Home() {
-  const { data } = useQuery(['all-posts'], getPosts);
+  const { data } = useQuery([QueryKey.RECENT_POSTS], () =>
+    PostService.getRecentPosts(5),
+  );
 
   console.log('data: ', data);
 
-  // useEffect(() => {
-  //   const posts = async () => {
-  //     const res = await getPosts();
-  //     console.log('res', res);
-  //   };
-  //   posts();
-  // }, []);
-
   return (
-    <div className="text-3xl font-bold underline">
-      {data?.edges.map((post: any) => (
-        <div key={post.cursor}>{post.cursor}</div>
+    <div className="mx-auto my-2 grid w-full max-w-2xl grid-cols-1 gap-2 px-2  md:grid-cols-2 md:px-0">
+      {data?.posts.map((post) => (
+        <PostCard key={post.id} post={post} />
       ))}
     </div>
   );
@@ -27,7 +22,13 @@ export default function Home() {
 export async function getStaticProps() {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(['all-posts'], getPosts, { staleTime: 1000 });
+  await queryClient.prefetchQuery(
+    [QueryKey.RECENT_POSTS],
+    () => PostService.getRecentPosts(5),
+    {
+      staleTime: 1000,
+    },
+  );
 
   return {
     props: {
