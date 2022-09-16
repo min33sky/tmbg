@@ -1,7 +1,7 @@
+import { useDateDistance } from '@/hooks/useDateDistance';
 import { RecentPost } from '@/services/postService';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 
 interface Props {
   post: RecentPost;
@@ -9,6 +9,7 @@ interface Props {
 
 export default function PostCard({ post }: Props) {
   const { author, createdAt, excerpt, featuredImage, slug, title } = post;
+  const dateDistance = useDateDistance(createdAt);
 
   return (
     <article className="flex flex-col gap-y-1 rounded-md bg-slate-100 py-4 px-2 shadow-lg">
@@ -31,7 +32,7 @@ export default function PostCard({ post }: Props) {
           <span className="text-sm text-gray-500">by</span>
           {author.name}
         </p>
-        <p>{new Date(createdAt).toLocaleString()}</p>
+        <p>{dateDistance}</p>
       </footer>
     </article>
   );

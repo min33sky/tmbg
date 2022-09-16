@@ -125,7 +125,7 @@ const PostService = {
         }
       }
     `;
-    const response = await client.request<Post>(query, { slug });
+    const response = await client.request<PostResult>(query, { slug });
     return response;
   },
 
@@ -178,11 +178,11 @@ export interface AllSlugs {
   };
 }
 
-export interface Post {
-  post: PostClass;
+export interface PostResult {
+  post: Post;
 }
 
-export interface PostClass {
+export interface Post {
   id: string;
   createdAt: Date;
   excerpt: string;

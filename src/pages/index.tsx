@@ -8,8 +8,6 @@ export default function Home() {
     PostService.getRecentPosts(5),
   );
 
-  console.log('data: ', data);
-
   return (
     <div className="mx-auto my-2 grid w-full max-w-2xl grid-cols-1 gap-2 px-2  md:grid-cols-2 md:px-0">
       {data?.posts.map((post) => (
@@ -22,12 +20,8 @@ export default function Home() {
 export async function getStaticProps() {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(
-    [QueryKey.RECENT_POSTS],
-    () => PostService.getRecentPosts(5),
-    {
-      staleTime: 1000,
-    },
+  await queryClient.prefetchQuery([QueryKey.RECENT_POSTS], () =>
+    PostService.getRecentPosts(5),
   );
 
   return {

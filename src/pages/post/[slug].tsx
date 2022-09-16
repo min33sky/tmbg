@@ -1,3 +1,4 @@
+import PostViewer from '@/components/post/PostViewer';
 import { QueryKey } from '@/lib/constants';
 import PostService from '@/services/postService';
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
@@ -21,7 +22,9 @@ export default function PostDetail() {
 
   console.log('data: ', data);
 
-  return <div>PostDetail</div>;
+  if (!data) return <p>No Data</p>;
+
+  return <PostViewer post={data.post} />;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
