@@ -28,12 +28,10 @@ function RenderRichText({ raw }: { raw: any }) {
           );
         },
         h2: ({ children }) => {
-          return (
-            <h2 className="text-3xl font-bold leading-loose">{children}</h2>
-          );
+          return <h2 className="py-4 text-3xl font-bold">{children}</h2>;
         },
         p: ({ children }) => {
-          return <p className="text-base leading-normal">{children}</p>;
+          return <p className="text-base">{children}</p>;
         },
       }}
     />
