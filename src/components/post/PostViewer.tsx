@@ -2,6 +2,7 @@ import { useDateDistance } from '@/hooks/useDateDistance';
 import { Post } from '@/services/postService';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import Overlay from '../system/Overlay';
 
 const RenderRichText = dynamic(() => import('../post/RenderRichText'), {
   ssr: false,

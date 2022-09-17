@@ -2,10 +2,9 @@ import PostViewer from '@/components/post/PostViewer';
 import { QueryKey } from '@/lib/constants';
 import getQueryClient from '@/lib/queryClient';
 import PostService from '@/services/postService';
-import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
+import { dehydrate, useQuery } from '@tanstack/react-query';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
-import React from 'react';
 
 export default function PostDetail() {
   const router = useRouter();
