@@ -1,5 +1,10 @@
 import Dialog from '@/components/system/Dialog';
+import dynamic from 'next/dynamic';
 import { createContext, useCallback, useContext, useState } from 'react';
+
+const Portal = dynamic(() => import('@/components/system/Portal'), {
+  ssr: false,
+});
 
 export interface DialogConfig {
   title: string;
@@ -44,16 +49,18 @@ export default function DialogProvider({ children }: Props) {
   return (
     <DialogContext.Provider value={{ openDialog }}>
       {children}
-      <Dialog
-        visible={visible}
-        title={config?.title ?? 'title'}
-        description={config?.description ?? 'description'}
-        confirmText={config?.confirmText}
-        cancelText={config?.cancelText}
-        onClose={closeDialog}
-        onConfirm={handleConfirm}
-        mode={config?.mode ?? 'confirm'}
-      />
+      <Portal>
+        <Dialog
+          visible={visible}
+          title={config?.title ?? 'title'}
+          description={config?.description ?? 'description'}
+          confirmText={config?.confirmText}
+          cancelText={config?.cancelText}
+          onClose={closeDialog}
+          onConfirm={handleConfirm}
+          mode={config?.mode ?? 'confirm'}
+        />
+      </Portal>
     </DialogContext.Provider>
   );
 }

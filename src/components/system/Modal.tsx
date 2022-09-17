@@ -19,7 +19,7 @@ export default function Modal({ visible, children, onClose }: Props) {
       <Overlay visible={visible} onClose={onClose} />
       <div
         aria-label="Positioner"
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 "
+        className="fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 "
       >
         <AnimatePresence>
           {visible && (

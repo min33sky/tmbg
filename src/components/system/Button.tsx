@@ -16,11 +16,11 @@ export default function Button({
   return (
     <button
       className={`group flex h-12 items-center justify-center border-none
-      px-4 text-base font-semibold text-white disabled:bg-gray-400
+      px-4 text-base font-semibold text-white transition disabled:bg-gray-400
       ${
         variant === 'primary'
-          ? 'bg-purple-500'
-          : 'bg-purple-100 text-purple-500'
+          ? 'bg-purple-500 hover:bg-purple-600'
+          : 'bg-purple-100 text-purple-500 hover:bg-purple-200'
       }
       ${layoutMode === 'inline' ? 'w-fit' : 'w-full'} `}
       {...rest}
