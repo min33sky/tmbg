@@ -1,35 +1,25 @@
 import '../styles/globals.css';
-import type { AppContext, AppInitialProps, AppProps } from 'next/app';
+import type { AppProps } from 'next/app';
 import MainLayout from '@/components/layout/MainLayout';
-import { useRef } from 'react';
-import {
-  Hydrate,
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query';
+import { Hydrate, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import getQueryClient from '@/lib/queryClient';
 
 function MyApp({
   Component,
   pageProps: { dehydratedState, ...pageProps },
 }: AppProps<{ dehydratedState: any }>) {
-  const queryClientRef = useRef<QueryClient>();
-  if (!queryClientRef.current) {
-    queryClientRef.current = new QueryClient({
-      defaultOptions: {
-        queries: {
-          refetchOnWindowFocus: false,
-        },
-      },
-    });
-  }
+  // Create react-query queryClient Instance
+  const queryClient = getQueryClient();
 
   return (
-    <QueryClientProvider client={queryClientRef.current}>
+    <QueryClientProvider client={queryClient}>
       <Hydrate state={dehydratedState}>
         <MainLayout>
           <Component {...pageProps} />
         </MainLayout>
       </Hydrate>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

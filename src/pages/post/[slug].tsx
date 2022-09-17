@@ -1,5 +1,6 @@
 import PostViewer from '@/components/post/PostViewer';
 import { QueryKey } from '@/lib/constants';
+import getQueryClient from '@/lib/queryClient';
 import PostService from '@/services/postService';
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 import { GetStaticPaths, GetStaticProps } from 'next';
@@ -49,9 +50,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       : params.slug
     : '';
 
-  const queryClient = new QueryClient();
-
-  console.log('### slug : ', slug);
+  const queryClient = getQueryClient();
 
   if (slug) {
     await queryClient.prefetchQuery([QueryKey.POST_BY_SLUG, slug], () =>

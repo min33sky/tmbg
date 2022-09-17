@@ -1,5 +1,6 @@
 import PostCard from '@/components/post/PostCard';
 import { QueryKey } from '@/lib/constants';
+import getQueryClient from '@/lib/queryClient';
 import PostService from '@/services/postService';
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 
@@ -18,7 +19,7 @@ export default function Home() {
 }
 
 export async function getStaticProps() {
-  const queryClient = new QueryClient();
+  const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery([QueryKey.RECENT_POSTS], () =>
     PostService.getRecentPosts(5),
