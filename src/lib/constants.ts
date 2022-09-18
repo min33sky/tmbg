@@ -4,6 +4,7 @@ export const QueryKey = {
   POSTS: 'posts',
   POST: 'post',
   RECENT_POSTS: 'recentPosts',
+  ADJACENT_POSTS: 'adjacentPosts',
   POSTS_BY_CATEGORY: 'postsByCategory',
   POSTS_BY_AUTHOR: 'postsByAuthor',
   POSTS_BY_TAG: 'postsByTag',

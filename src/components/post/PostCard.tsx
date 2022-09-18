@@ -13,7 +13,7 @@ export default function PostCard({ post }: Props) {
 
   return (
     <article className="flex flex-col gap-y-1 rounded-md bg-slate-100 py-4 px-2 shadow-lg">
-      <Link href={`/post/${slug}`}>
+      <Link href={`/posts/${slug}`}>
         <a>
           <figure className="relative h-[40vh]">
             <Image
