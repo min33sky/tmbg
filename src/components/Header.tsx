@@ -11,7 +11,9 @@ export default function Header() {
       </Link>
 
       <div className="flex items-center gap-x-2 text-tahiti-600">
-        <div onClick={() => openDialog('not-ready')}>Posts</div>
+        <Link href={'/posts'}>
+          <a>Posts</a>
+        </Link>
         <div onClick={() => openDialog('not-ready')}>Menu1</div>
         <div onClick={() => openDialog('not-ready')}>Menu2</div>
       </div>
