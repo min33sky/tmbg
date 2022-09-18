@@ -2,6 +2,7 @@ import { useDateDistance } from '@/hooks/useDateDistance';
 import { Post } from '@/services/postService';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import Divider from '../system/Divider';
 import AdjacentPost from './AdjacentPost';
 
 const RenderRichText = dynamic(() => import('../post/RenderRichText'), {
@@ -44,10 +45,14 @@ export default function PostViewer({ post }: Props) {
 
       <h1 className="py-4 text-2xl font-bold">{title}</h1>
 
+      <Divider />
+
       <RenderRichText raw={content.raw} />
 
-      {/** @todo: 이전 포스트, 다음 포스트 */}
+      <Divider />
+
       <AdjacentPost id={id} category={categories[0].name} />
+
       {/** @todo: 댓글 */}
     </article>
   );

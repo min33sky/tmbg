@@ -26,7 +26,11 @@ export default function AdjacentPost({ id, category, tags }: Props) {
 
   return (
     <article className="my-3 grid grid-cols-1 gap-1 md:grid-cols-2">
-      <div className="bg-indigo-100 px-2 py-2 text-sm transition hover:bg-indigo-200">
+      <div
+        className={` rounded-md px-2 py-3 text-sm transition ${
+          prevPost ? 'bg-purple-100 hover:bg-purple-200 ' : 'bg-slate-300'
+        }`}
+      >
         {prevPost ? (
           <Link href={`/posts/${prevPost.slug}`}>
             <a className="flex items-center gap-1">
@@ -38,7 +42,11 @@ export default function AdjacentPost({ id, category, tags }: Props) {
           <p>이전 포스트가 없습니다.</p>
         )}
       </div>
-      <div className="bg-indigo-100 px-2 py-2 text-sm transition hover:bg-indigo-200">
+      <div
+        className={` rounded-md px-2 py-3 text-sm transition  ${
+          nextPost ? 'bg-purple-100 hover:bg-purple-200 ' : 'bg-slate-300'
+        }`}
+      >
         {nextPost ? (
           <Link href={`/posts/${nextPost.slug}`}>
             <a className="flex items-center justify-end gap-1 ">

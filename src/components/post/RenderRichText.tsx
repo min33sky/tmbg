@@ -33,6 +33,19 @@ function RenderRichText({ raw }: { raw: any }) {
         p: ({ children }) => {
           return <p className="py-1 text-base">{children}</p>;
         },
+        ol: ({ children }) => {
+          return <ol className="list-inside list-decimal">{children}</ol>;
+        },
+        li: ({ children }) => {
+          return <li className="py-1 pl-2 text-base">{children}</li>;
+        },
+        bold: ({ children }) => {
+          return (
+            <span className="font-bold underline decoration-purple-800 decoration-dotted decoration-4 underline-offset-[6px]">
+              {children}
+            </span>
+          );
+        },
       }}
     />
   );
