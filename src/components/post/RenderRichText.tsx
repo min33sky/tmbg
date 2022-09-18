@@ -1,12 +1,10 @@
 import { RichText } from '@graphcms/rich-text-react-renderer';
 import React, { useEffect } from 'react';
 import Prism from 'prismjs';
-import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
-import 'prismjs/themes/prism-tomorrow.css';
-import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
 import 'prismjs/components/prism-typescript.min';
-import 'prismjs/components/prism-jsx.min';
-import 'prismjs/components/prism-tsx.min';
+import 'prismjs/plugins/toolbar/prism-toolbar.min.css';
+import 'prismjs/plugins/toolbar/prism-toolbar.min';
+import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min';
 
 function RenderRichText({ raw }: { raw: any }) {
   useEffect(() => {
@@ -22,16 +20,18 @@ function RenderRichText({ raw }: { raw: any }) {
       renderers={{
         code_block: ({ children }) => {
           return (
-            <pre className="line-numbers language-ts text-lg">
-              <code className="">{children}</code>
-            </pre>
+            <div className="relative">
+              <pre className="language-ts">
+                <code className="">{children}</code>
+              </pre>
+            </div>
           );
         },
         h2: ({ children }) => {
           return <h2 className="py-4 text-3xl font-bold">{children}</h2>;
         },
         p: ({ children }) => {
-          return <p className="text-base">{children}</p>;
+          return <p className="py-1 text-base">{children}</p>;
         },
       }}
     />
