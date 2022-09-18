@@ -21,23 +21,34 @@ export default function AdjacentPost({ id, category, tags }: Props) {
     PostService.getAdjacentPostsByCategory(id, category),
   );
 
+  const prevPost = data?.adjacentPosts.prev[0];
+  const nextPost = data?.adjacentPosts.next[0];
+
   return (
-    <article className="grid grid-cols-1 gap-1 md:grid-cols-2">
-      <div className="bg-indigo-100 px-2 py-2 text-sm">
-        <Link href={`/posts/${data?.adjacentPosts?.prev[0]?.slug}`}>
-          <a className="flex items-center gap-1">
-            <ArrowLeftIcon className="h-4 w-4" />
-            {data?.adjacentPosts?.prev[0]?.title ?? '이전 포스트가 없습니다.'}
-          </a>
-        </Link>
+    <article className="my-3 grid grid-cols-1 gap-1 md:grid-cols-2">
+      <div className="bg-indigo-100 px-2 py-2 text-sm transition hover:bg-indigo-200">
+        {prevPost ? (
+          <Link href={`/posts/${prevPost.slug}`}>
+            <a className="flex items-center gap-1">
+              <ArrowLeftIcon className="h-4 w-4" />
+              {prevPost.title}
+            </a>
+          </Link>
+        ) : (
+          <p>이전 포스트가 없습니다.</p>
+        )}
       </div>
-      <div className="bg-indigo-100 px-2 py-2 text-sm">
-        <Link href={`/posts/${data?.adjacentPosts?.next[0]?.slug}`}>
-          <a className="flex items-center justify-end gap-1 ">
-            {data?.adjacentPosts?.next[0]?.title ?? '다음 포스트가 없습니다.'}
-            <ArrowRightIcon className="h-4 w-4" />
-          </a>
-        </Link>
+      <div className="bg-indigo-100 px-2 py-2 text-sm transition hover:bg-indigo-200">
+        {nextPost ? (
+          <Link href={`/posts/${nextPost.slug}`}>
+            <a className="flex items-center justify-end gap-1 ">
+              {nextPost.title}
+              <ArrowRightIcon className="h-4 w-4" />
+            </a>
+          </Link>
+        ) : (
+          <p>다음 포스트가 없습니다.</p>
+        )}
       </div>
     </article>
   );

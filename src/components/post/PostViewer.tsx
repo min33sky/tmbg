@@ -26,22 +26,23 @@ export default function PostViewer({ post }: Props) {
   const dateDistance = useDateDistance(createdAt);
 
   return (
-    <article className="mx-auto my-2 flex max-w-3xl flex-col rounded-lg bg-slate-100 py-4 px-6 shadow-lg">
-      <header>
-        <div>{dateDistance}</div>
+    <article className="mx-auto my-2 flex max-w-3xl flex-col gap-y-1 rounded-lg bg-slate-100 py-4 px-6 shadow-lg">
+      <header className="flex items-center justify-between">
         <p>by {author.name}</p>
+        <div>{dateDistance}</div>
       </header>
+
       <figure className="relative h-[50vh] w-full">
         <Image
           src={featuredImage.url}
           alt="featured Image"
-          objectFit="contain"
+          objectFit="cover"
           layout="fill"
           priority={true}
         />
       </figure>
 
-      <h1>{title}</h1>
+      <h1 className="py-4 text-2xl font-bold">{title}</h1>
 
       <RenderRichText raw={content.raw} />
 

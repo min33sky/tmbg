@@ -179,6 +179,154 @@ const PostService = {
     });
     return response;
   },
+
+  // TODO: 아직 미구현
+
+  async getSimilarPosts() {
+    const query = gql`
+      query GetSimilarPostsQuery($slug: String!, $categories: [String!]) {
+        posts(
+          where: {
+            slug_not: $slug
+            AND: { categories_some: { slug_in: $categories } }
+          }
+          first: 3
+          orderBy: createdAt_DESC
+        ) {
+          title
+          featuredImage {
+            url
+          }
+          createdAt
+          slug
+        }
+      }
+    `;
+  },
+
+  async getPostsWithPagination() {
+    const query = gql`
+      query PaginationPostsQuery($first: Int!, $skip: Int!) {
+        postsConnection(orderBy: createdAt_DESC, first: $first, skip: $skip) {
+          edges {
+            node {
+              id
+              title
+              slug
+              createdAt
+              excerpt
+              featuredImage {
+                url
+              }
+              author {
+                bio
+                id
+                name
+                photo {
+                  url
+                }
+              }
+              categories {
+                name
+                slug
+              }
+            }
+          }
+          pageInfo {
+            startCursor
+            endCursor
+            pageSize
+            hasNextPage
+            hasPreviousPage
+          }
+        }
+      }
+    `;
+  },
+
+  async getFeaturedPosts() {
+    const query = gql`
+      query GetFeaturedPost {
+        posts(where: { featuredPost: true }) {
+          title
+          slug
+          createdAt
+          featuredImage {
+            url
+          }
+          author {
+            name
+            photo {
+              url
+            }
+          }
+        }
+      }
+    `;
+  },
+
+  async getTagtemp() {
+    const query = gql`
+      query GetTagWithPostsQuery {
+        tags {
+          name
+          posts {
+            slug
+          }
+        }
+      }
+    `;
+  },
+
+  async getCursorBasedPagination() {
+    const query = gql`
+      query CursorBasedPaginationQuery($cursor: String!, $first: Int!) {
+        postsConnection(
+          after: $cursor
+          first: $first
+          orderBy: createdAt_DESC
+        ) {
+          edges {
+            cursor
+            node {
+              slug
+            }
+          }
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+            pageSize
+          }
+        }
+      }
+    `;
+  },
+
+  async getKeyword() {
+    const query = gql`
+      query SearchKeywordQuery($keyword: String!) {
+        postsConnection(where: { title_contains: $keyword }) {
+          edges {
+            cursor
+            node {
+              id
+              title
+              slug
+            }
+          }
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+            pageSize
+          }
+        }
+      }
+    `;
+  },
 };
 
 export default PostService;
