@@ -1,25 +1,20 @@
 import PostCard from '@/components/post/PostCard';
 import Button from '@/components/system/Button';
+import useInfinityScroll from '@/hooks/useInfinityScroll';
 import { QueryKey } from '@/lib/constants';
 import getQueryClient from '@/lib/queryClient';
 import PostService from '@/services/postService';
-import {
-  dehydrate,
-  useInfiniteQuery,
-  useQueries,
-  useQuery,
-} from '@tanstack/react-query';
+import { dehydrate, useInfiniteQuery } from '@tanstack/react-query';
 import { GetStaticProps } from 'next';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useRef } from 'react';
 
-/**
- * TODO: 모든 포스트를 페이지네이션으로 보여줄 수 있도록 구현
- */
-export default function Posts() {
+export default function PostsPage() {
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+
   const { data, hasNextPage, isFetching, fetchNextPage } = useInfiniteQuery(
     [QueryKey.RECENT_POSTS_PAGINATION],
     ({ pageParam = null }) =>
-      PostService.getCursorBasedPagination(pageParam, 3),
+      PostService.getCursorBasedPagination(pageParam, 4),
     {
       getNextPageParam: (lastPage) => {
         if (!lastPage.postsConnection.pageInfo.hasNextPage) return null;
@@ -28,25 +23,34 @@ export default function Posts() {
     },
   );
 
-  // console.log('paginationData', data);
-
   const fetchNext = useCallback(() => {
     if (!hasNextPage) return;
     fetchNextPage();
   }, [fetchNextPage, hasNextPage]);
 
   const posts = data?.pages.flatMap((page) => page.postsConnection.edges);
-  console.log('posts', posts);
+
+  useInfinityScroll(loadMoreRef, fetchNext);
 
   return (
-    <div className="mx-auto my-2 grid w-full max-w-2xl grid-cols-1 gap-2 px-2  md:grid-cols-2 md:px-0">
-      {posts?.map((post) => (
-        <PostCard key={post.cursor} post={post.node} />
-      ))}
-      <Button disabled={!hasNextPage} onClick={fetchNext}>
-        더보기
-      </Button>
-    </div>
+    <>
+      <div className="mx-auto my-2 grid w-full max-w-2xl grid-cols-1 gap-2 px-2  md:grid-cols-2 md:px-0">
+        {posts?.map((post) => (
+          <PostCard key={post.cursor} post={post.node} />
+        ))}
+      </div>
+      <div
+        aria-label="Load More"
+        className="h-8 w-full bg-red-500 text-white"
+        ref={loadMoreRef}
+      >
+        {isFetching ? (
+          <p>Loading...........</p>
+        ) : (
+          <p>Last Page..............</p>
+        )}
+      </div>
+    </>
   );
 }
 
@@ -55,7 +59,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   await queryClient.prefetchInfiniteQuery(
     [QueryKey.RECENT_POSTS_PAGINATION],
-    () => PostService.getCursorBasedPagination(null, 3),
+    () => PostService.getCursorBasedPagination(null, 4),
   );
 
   return {
