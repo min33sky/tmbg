@@ -6,11 +6,11 @@ export default function Header() {
   const openDialog = useOpenAlertDialog();
 
   return (
-    <header className="h-20 w-full bg-slate-700 text-white">
-      <div className="mx-auto flex max-w-5xl items-center justify-between bg-slate-700 py-5 px-3 text-white">
+    <header className="sticky top-0 z-20 h-16 w-full bg-zinc-800 text-white">
+      <div className="mx-auto flex max-w-5xl items-center justify-between bg-zinc-800 py-3 px-3 text-white">
         <Link href={'/'}>
-          <a aria-label="logo to go home">
-            <Logo className="text-white" />
+          <a aria-label="logo to go home" className="">
+            <Logo className="pt-1 text-white transition hover:translate-y-1 hover:text-zinc-200" />
           </a>
         </Link>
 

@@ -16,9 +16,9 @@ function MyApp({
     <QueryClientProvider client={queryClient}>
       <Hydrate state={dehydratedState}>
         <DialogProvider>
-          <MainLayout>
-            <Component {...pageProps} />
-          </MainLayout>
+          {/* <MainLayout> */}
+          <Component {...pageProps} />
+          {/* </MainLayout> */}
         </DialogProvider>
       </Hydrate>
       <ReactQueryDevtools initialIsOpen={false} />

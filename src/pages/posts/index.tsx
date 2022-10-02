@@ -1,5 +1,5 @@
+import MainLayout from '@/components/layout/MainLayout';
 import PostCard from '@/components/post/PostCard';
-import Button from '@/components/system/Button';
 import useInfinityScroll from '@/hooks/useInfinityScroll';
 import { QueryKey } from '@/lib/constants';
 import getQueryClient from '@/lib/queryClient';
@@ -33,7 +33,7 @@ export default function PostsPage() {
   useInfinityScroll(loadMoreRef, fetchNext);
 
   return (
-    <>
+    <MainLayout title="Posts | Tmbg">
       <div className="mx-auto my-2 grid w-full max-w-2xl grid-cols-1 gap-2 px-2  md:grid-cols-2 md:px-0">
         {posts?.map((post) => (
           <PostCard key={post.cursor} post={post.node} />
@@ -50,7 +50,7 @@ export default function PostsPage() {
           <p>Last Page..............</p>
         )}
       </div>
-    </>
+    </MainLayout>
   );
 }
 
