@@ -126,11 +126,17 @@ const PostService = {
       }
     `;
     const response = await client.request<PostResult>(query, { slug });
+
+    if (!response.post) {
+      throw new Error('Post not found!!!!');
+    }
+
     return response;
   },
 
   /**
-   * Get All Slugs
+   * 모든 슬러그 가져오기
+   * @description getStaticPaths()에서 fallback: true를 할 경우 필요가 없어진다.
    */
   async getAllSlugs() {
     const query = gql`
@@ -148,6 +154,23 @@ const PostService = {
 
     const response = await client.request<AllSlugs>(query);
     return response.postsConnection;
+  },
+
+  /**
+   * 슬러그가 존재 여부를 확인하는 메서드
+   * @param slug 슬러그
+   */
+  async isExistsSlug(slug: string) {
+    const query = gql`
+      query isExistsSlug($slug: String!) {
+        post(where: { slug: $slug }) {
+          id
+        }
+      }
+    `;
+
+    const response = await client.request<PostResult>(query, { slug });
+    return !!response.post;
   },
 
   /**
