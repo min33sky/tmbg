@@ -2,12 +2,13 @@ import { useDateDistance } from '@/hooks/useDateDistance';
 import { Post } from '@/services/postService';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import RenderRichText from '../post/RenderRichText';
 import Divider from '../system/Divider';
 import AdjacentPost from './AdjacentPost';
 
-const RenderRichText = dynamic(() => import('../post/RenderRichText'), {
-  ssr: false,
-});
+// const RenderRichText = dynamic(() => import('../post/RenderRichText'), {
+//   ssr: true,
+// });
 
 interface Props {
   post: Post;
